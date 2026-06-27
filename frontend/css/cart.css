@@ -1,0 +1,935 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* ============================================
+   НАВИГАЦИЯ
+   ============================================ */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    color: white;
+    position: relative;
+    z-index: 10;
+    background-color: rgba(0, 8, 122, 0.925);
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(50, 250, 0);
+    cursor: pointer;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid rgba(50, 250, 0, 0.3);
+    border-radius: 25px 0 0 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgb(50, 250, 0);
+    box-shadow: 0 0 15px rgba(50, 250, 0, 0.2);
+}
+
+.search-button {
+    padding: 9px 20px;
+    border: 2px solid rgba(50, 250, 0, 0.3);
+    border-left: none;
+    border-radius: 0 25px 25px 0;
+    background: rgba(50, 250, 0, 0.2);
+    color: rgb(50, 250, 0);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    background: rgba(50, 250, 0, 0.4);
+    border-color: rgb(50, 250, 0);
+    box-shadow: 0 0 20px rgba(50, 250, 0, 0.3);
+}
+
+.search-button:active {
+    transform: scale(0.95);
+}
+
+.nav-link {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-link li {
+    position: relative;
+}
+
+.nav-link li a {
+    color: rgb(50, 250, 0);
+    text-decoration: none;
+    padding: 8px 12px;
+    transition: background 0.3s ease;
+    display: block;
+}
+
+.nav-link li:hover {
+    background: #000852;
+    border-radius: 4px;
+}
+
+/* Каталог */
+.dropout {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #000d85;
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    pointer-events: none;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.catalog:hover .dropout {
+    opacity: 1;
+    transform: translateY(0px);
+    pointer-events: auto;
+}
+
+/* Аккаунт */
+.nav-link li.account-item {
+    position: relative;
+}
+
+.account-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #000d85;
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    pointer-events: none;
+    opacity: 0;
+    margin-top: 0;
+    z-index: 1000;
+}
+
+.nav-link li.account-item:hover .account-dropdown {
+    opacity: 1;
+    transform: translateY(0px);
+    pointer-events: auto;
+}
+
+.account-dropdown li {
+    display: block;
+    padding: 0;
+    background: transparent;
+}
+
+.account-dropdown li a {
+    color: rgb(50, 250, 0);
+    text-decoration: none;
+    padding: 8px 15px;
+    display: block;
+    transition: background 0.3s ease;
+    font-size: 14px;
+}
+
+.account-dropdown li a:hover {
+    background: #000852;
+    border-radius: 0;
+}
+
+.account-link {
+    color: rgb(50, 250, 0);
+    text-decoration: none;
+    padding: 8px 12px;
+    display: block;
+    cursor: pointer;
+}
+
+.nav-link li.account-item:hover {
+    background: #000852;
+    border-radius: 4px;
+}
+
+/* ============================================
+   БЕЙДЖИ
+   ============================================ */
+
+#favoritesLink {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.favorites-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #ff4081;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    animation: pulse-badge 0.5s ease;
+}
+
+@keyframes pulse-badge {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================
+   ЗАГОЛОВОК
+   ============================================ */
+
+.category-header {
+    text-align: center;
+    padding: 20px 30px 10px;
+}
+
+.category-header h2 {
+    color: rgba(0, 8, 122, 0.925);
+    font-size: 26px;
+    position: relative;
+    display: inline-block;
+}
+
+.category-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: rgba(0, 8, 122, 0.3);
+    border-radius: 2px;
+}
+
+/* ============================================
+   КОНТЕЙНЕР
+   ============================================ */
+
+.container2 {
+    padding: 20px 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   ВКЛАДКИ
+   ============================================ */
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0;
+}
+
+.tab-btn {
+    padding: 12px 25px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #888;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn:hover {
+    color: #333;
+}
+
+.tab-btn.active {
+    color: rgba(0, 8, 122, 0.925);
+    border-bottom-color: rgba(0, 8, 122, 0.925);
+}
+
+.tab-badge {
+    display: inline-block;
+    background: #ff4081;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 5px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.tab-content {
+    min-height: 300px;
+}
+
+/* ============================================
+   КОРЗИНА
+   ============================================ */
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+}
+
+.cart-item-category {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cart-item-manufacturer {
+    font-size: 13px;
+    color: #aaa;
+}
+
+.cart-item-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(0, 8, 122, 0.925);
+    margin-top: 4px;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.qty-btn:hover {
+    background: rgba(0, 8, 122, 0.1);
+    transform: scale(1.05);
+}
+
+.qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.cart-item-total {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(0, 8, 122, 0.925);
+    min-width: 100px;
+    text-align: right;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    color: #888;
+}
+
+.remove-btn:hover {
+    background: #fee;
+    color: #e74c3c;
+    transform: scale(1.1);
+}
+
+/* ============================================
+   ИТОГИ КОРЗИНЫ
+   ============================================ */
+
+.cart-summary {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cart-summary-info {
+    display: flex;
+    gap: 25px;
+    font-size: 16px;
+    color: #555;
+    flex-wrap: wrap;
+}
+
+.cart-summary-info .total-price {
+    font-size: 20px;
+    color: rgba(0, 8, 122, 0.925);
+}
+
+.cart-summary-info strong {
+    color: #1a1a2e;
+}
+
+.cart-summary-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.clear-cart-btn {
+    padding: 10px 20px;
+    background: #fee;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.clear-cart-btn:hover {
+    background: #e74c3c;
+    color: white;
+    transform: scale(1.02);
+}
+
+.checkout-btn {
+    padding: 10px 30px;
+    background: rgba(0, 8, 122, 0.925);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background: rgb(0, 12, 170);
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 8, 122, 0.3);
+}
+
+/* ============================================
+   ПУСТАЯ КОРЗИНА
+   ============================================ */
+
+.empty-cart {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty-cart h2 {
+    color: #1a1a2e;
+    margin-bottom: 10px;
+}
+
+.empty-cart p {
+    color: #888;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.empty-cart .retry-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    background: rgba(0, 8, 122, 0.925);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.empty-cart .retry-btn:hover {
+    background: rgb(0, 12, 170);
+    transform: scale(1.02);
+}
+
+/* ============================================
+   ФОРМА ОФОРМЛЕНИЯ ЗАКАЗА
+   ============================================ */
+
+.checkout-form {
+    background: white;
+    padding: 30px 35px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.checkout-form h2 {
+    color: rgba(0, 8, 122, 0.925);
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.checkout-total {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.checkout-total strong {
+    color: rgba(0, 8, 122, 0.925);
+    font-size: 22px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: #fafafa;
+    color: #333;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(0, 8, 122, 0.4);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 8, 122, 0.08);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #bbb;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.checkout-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.back-btn {
+    flex: 1;
+    padding: 12px 20px;
+    background: #f0f0f0;
+    color: #555;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #e0e0e0;
+    transform: scale(1.02);
+}
+
+.submit-order-btn {
+    flex: 2;
+    padding: 12px 30px;
+    background: rgba(0, 8, 122, 0.925);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.submit-order-btn:hover {
+    background: rgb(0, 12, 170);
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 8, 122, 0.3);
+}
+
+.submit-order-btn:active {
+    transform: scale(0.97);
+}
+
+/* ============================================
+   КАРТОЧКА ЗАКАЗА
+   ============================================ */
+
+.order-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.order-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.order-number {
+    font-weight: 600;
+    color: rgba(0, 8, 122, 0.925);
+    font-size: 16px;
+}
+
+.order-date {
+    color: #888;
+    font-size: 14px;
+}
+
+.order-status {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.order-status.paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.order-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.order-items {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.order-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.order-item-info {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.order-item-name {
+    flex: 1;
+    font-weight: 500;
+    color: #333;
+}
+
+.order-item-qty {
+    color: #888;
+    font-size: 14px;
+}
+
+.order-item-price {
+    font-weight: 600;
+    color: rgba(0, 8, 122, 0.925);
+}
+
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.order-address {
+    color: #666;
+    font-size: 14px;
+    flex: 1;
+}
+
+.order-total {
+    font-size: 18px;
+    color: #333;
+}
+
+.order-total strong {
+    color: rgba(0, 8, 122, 0.925);
+}
+
+.pay-btn {
+    padding: 8px 25px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pay-btn:hover {
+    background: #218838;
+    transform: scale(1.02);
+}
+
+.paid-badge {
+    padding: 8px 20px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ============================================
+   ПУСТЫЕ ЗАКАЗЫ
+   ============================================ */
+
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.empty-orders .empty-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.empty-orders h2 {
+    color: #1a1a2e;
+    margin-bottom: 10px;
+}
+
+.empty-orders p {
+    color: #888;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* ============================================
+   СООБЩЕНИЯ
+   ============================================ */
+
+.error-message {
+    text-align: center;
+    padding: 50px 20px;
+    background: #fff;
+    border-radius: 14px;
+}
+
+.error-message p {
+    color: #666;
+    font-size: 17px;
+    margin-bottom: 16px;
+}
+
+.error-message button {
+    padding: 10px 35px;
+    background: rgba(0, 8, 122, 0.925);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.error-message button:hover {
+    background: rgb(0, 12, 170);
+    transform: scale(1.02);
+}
+
+.loading-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 18px;
+}

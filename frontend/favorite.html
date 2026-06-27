@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberTech - Избранное</title>
+    <link rel="stylesheet" href="css/favorite.css">
+    <link rel="icon" href="img/vecteezy_processor-vector-icon-design_16364525.svg">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" id="logoLink">CyberTech</a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Поиск товаров...">
+            <button class="search-button">Поиск</button>
+        </div>
+        <ul class="nav-link">
+            <li class="catalog">
+                <a href="#">Каталог</a>
+                <ul class="dropout">
+                    <li><a href="index.html" data-category="1">Бытовая техника</a></li>
+                    <li><a href="index.html" data-category="2">Смартфоны</a></li>
+                    <li><a href="index.html" data-category="3">ПК, ноутбуки, периферия</a></li>
+                    <li><a href="index.html" data-category="4">Сетевое оборудование</a></li>
+                </ul>
+            </li>
+            <li><a href="cart.html" id="cartLink">Корзина</a></li>
+            <li><a href="favorite.html" id="favoritesLink">Избранное</a></li>
+            <li id="login-item"><a href="login.html">Войти</a></li>
+        </ul>
+    </nav>
+
+    <div class="category-header">
+        <h2 id="categoryTitle">Избранное</h2>
+    </div>
+
+    <div class="container2">
+        <div class="products" id="favoritesContainer">
+            <div class="loading-message">Загрузка избранного...</div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/favorite.js"></script>
+</body>
+</html>

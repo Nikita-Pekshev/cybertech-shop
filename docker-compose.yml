@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: cybertech_backend
+    volumes:
+      - ./backend:/app
+      - ./database:/app/database   
+    ports:
+      - "5000:5000"
+    networks:
+      - cybertech_network
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: cybertech_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cybertech_network
+    restart: unless-stopped
+
+networks:
+  cybertech_network:
+    driver: bridge

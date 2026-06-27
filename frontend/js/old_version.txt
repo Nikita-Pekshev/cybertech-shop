@@ -1,0 +1,165 @@
+// Данные брендов
+const brands = [
+    { name: 'Asus', logo: 'img/asus-svgrepo-com.svg' },
+    { name: 'Dell', logo: 'img/dell-svgrepo-com.svg' },
+    { name: 'Honor', logo: 'img/Honor_(brand)-Logo.wine.svg' },
+    { name: 'HP', logo: 'img/hp-svgrepo-com.svg' },
+    { name: 'Lenovo', logo: 'img/apple-black-logo-svgrepo-com.svg' },
+    { name: 'LG', logo: 'img/lg-svgrepo-com.svg' },
+    { name: 'Nokia', logo: 'img/nokia-svgrepo-com.svg' },
+    { name: 'Samsung', logo: 'img/samsung-svgrepo-com.svg' },
+    { name: 'Toshiba', logo: 'img/toshiba-svgrepo-com.svg' },
+    { name: 'Vivo', logo: 'img/vivo-2-logo-svgrepo-com.svg' },
+    { name: 'Xiaomi', logo: 'img/xiaomi-svgrepo-com.svg' }
+];
+
+// Дублируем массив для бесконечной прокрутки
+const extendedBrands = [...brands, ...brands, ...brands];
+
+// Получаем элементы
+const track = document.querySelector('.carousel-track');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+let position = 0;
+let speed = 0.5; // Пикселей за кадр
+let isAnimating = true;
+let animationId = null;
+const itemWidth = 170; // Ширина элемента + gap
+let isManualScroll = false; // Флаг для ручной прокрутки
+let manualTimeout = null;
+
+// Создаем элементы брендов
+function renderBrands() {
+    track.innerHTML = '';
+    extendedBrands.forEach((brand) => {
+        const div = document.createElement('div');
+        div.className = 'brand-item';
+        div.innerHTML = `
+            <img src="${brand.logo}" alt="${brand.name}" class="brand-logo-img">
+        `;
+        track.appendChild(div);
+    });
+}
+
+// Анимация прокрутки
+function animate() {
+    if (!isAnimating) return;
+    
+    // Если идет ручная прокрутка, не двигаем автоматически
+    if (!isManualScroll) {
+        position -= speed;
+    }
+    
+    // Если дошли до конца, возвращаемся в начало (бесконечная прокрутка)
+    if (position <= -(brands.length * itemWidth)) {
+        position = 0;
+    }
+    if (position > 0) {
+        position = -(brands.length * itemWidth);
+    }
+    
+    track.style.transform = `translateX(${position}px)`;
+    animationId = requestAnimationFrame(animate);
+}
+
+// Запуск анимации
+function startAnimation() {
+    isAnimating = true;
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+    }
+    animate();
+}
+
+// Остановка анимации
+function stopAnimation() {
+    isAnimating = false;
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+}
+
+// Ручная прокрутка
+function manualSlide(direction) {
+    // Останавливаем автоматическую прокрутку на время
+    isManualScroll = true;
+    
+    // Прокручиваем на один бренд
+    const step = direction * itemWidth;
+    const targetPosition = position + step;
+    
+    // Плавная анимация до целевой позиции
+    const startPosition = position;
+    const startTime = performance.now();
+    const duration = 300; // 300ms для плавности
+    
+    function smoothScroll(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Easing функция для плавности
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const currentPosition = startPosition + (step * ease);
+        
+        track.style.transform = `translateX(${currentPosition}px)`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(smoothScroll);
+        } else {
+            position = targetPosition;
+            
+            // Проверяем границы для бесконечной прокрутки
+            if (position <= -(brands.length * itemWidth)) {
+                position = 0;
+            }
+            if (position > 0) {
+                position = -(brands.length * itemWidth);
+            }
+            
+            track.style.transform = `translateX(${position}px)`;
+            
+            // Возвращаем автоматическую прокрутку через 2 секунды
+            clearTimeout(manualTimeout);
+            manualTimeout = setTimeout(() => {
+                isManualScroll = false;
+            }, 2000);
+        }
+    }
+    
+    requestAnimationFrame(smoothScroll);
+}
+
+// Обработчики кнопок - ИСПРАВЛЕНО НАПРАВЛЕНИЕ
+prevBtn.addEventListener('click', () => {
+    manualSlide(1); // Левая кнопка - прокрутка ВПРАВО (показываем предыдущие бренды)
+});
+
+nextBtn.addEventListener('click', () => {
+    manualSlide(-1); // Правая кнопка - прокрутка ВЛЕВО (показываем следующие бренды)
+});
+
+// Пауза при наведении
+track.addEventListener('mouseenter', () => {
+    stopAnimation();
+});
+
+track.addEventListener('mouseleave', () => {
+    if (!isManualScroll) {
+        startAnimation();
+    }
+});
+
+// Инициализация
+renderBrands();
+startAnimation();
+
+// Адаптация при изменении размера окна
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        position = 0;
+        track.style.transform = `translateX(${position}px)`;
+    }, 200);
+});

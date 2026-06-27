@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberTech</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/vecteezy_processor-vector-icon-design_16364525.svg">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">CyberTech</a>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Поиск товаров...">
+            <button class="search-button">Поиск</button>
+        </div>
+        <ul class = "nav-link">
+            <li class="catalog"><a href="#">Каталог</a>
+                <ul class = "dropout">
+                    <li><a href="#"  data-category="1">Бытовая техника</a></li>
+                    <li><a href="#"  data-category="2">Смартфоны</a></li>
+                    <li><a href="#"  data-category="3">ПК,ноутбуки,периферия</a></li>
+                    <li><a href="#"  data-category="4">Сетевое оборудование</a></li>
+                </ul>
+            </li>
+            <li><a href="cart.html" id="cartLink">
+                Корзина
+            </a></li>
+            <li><a href="favorite.html" id="favoritesLink">
+                Избранное
+            </a></li>
+            <li id="login-item"><a href="login.html">Войти</a></li>
+            </li>
+        </ul>
+    </nav>
+    <div class="container1">
+        <div class="name_brand">
+            <h2>Бренды</h2>
+        </div>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev-btn">❮</button>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <!-- Бренды будут добавлены через JavaScript -->
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">❯</button>
+        </div>
+    </div>
+    <div class="header_cont2">
+            <h2 id="categoryTitle">Товары</h2>
+    </div>
+    <div class="container2">
+        <div class="products">
+            <div class="product">
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
